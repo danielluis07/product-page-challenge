@@ -7,18 +7,20 @@ type CartIconProps = {
 type CartDiv = {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   cart: Array<{
-    id: string;
+    id: any;
     amount: number;
-    images: Array<{
-      bigImage: StaticImageData;
-      smallImage: StaticImageData;
-    }>;
-    title: string;
-    description: string;
-    price: number;
+    stats: {
+      images: Array<{
+        bigImage: StaticImageData;
+        smallImage: StaticImageData;
+      }>;
+      title: string;
+      description: string;
+      price: number;
+    };
   }>;
   total: number;
-  removeFromCart: (id: string) => void;
+  removeFromCart: (id: any) => void;
 };
 
 type SetNavMobile = {
@@ -26,11 +28,27 @@ type SetNavMobile = {
 };
 
 type AddToCart = {
-  addToCart: (item: Array<{}>, id: string) => void;
-  increaseItemQuantity: (itemId: string) => void;
-  decreaseItemQuantity: (itemId: string) => void;
+  addToCart: (item: Array<{}>, id: any) => void;
+  increaseItemQuantity: (itemId: number) => void;
+  decreaseItemQuantity: (itemId: number) => void;
   setItemQuantity: (itemId: any, newQuantity: any) => void;
   itemsAmount: number;
+  handleInput: (
+    e: {
+      target: {
+        value: string;
+      };
+    },
+    id: any
+  ) => void;
+  handleSelect: (
+    e: {
+      target: {
+        value: string;
+      };
+    },
+    id: any
+  ) => void;
 };
 
 type HandleInput = {
@@ -40,7 +58,7 @@ type HandleInput = {
         value: string;
       };
     },
-    id: string
+    id: any
   ) => void;
   handleSelect: (
     e: {
@@ -48,6 +66,6 @@ type HandleInput = {
         value: string;
       };
     },
-    id: string
+    id: any
   ) => void;
 };

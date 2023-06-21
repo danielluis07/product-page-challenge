@@ -17,28 +17,23 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   // increase item quantity
 
-  const increaseItemQuantity = (itemId: string) => {
-    setCart((prevCartItems) =>
-      prevCartItems.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, quantity: item.quantity + 1 };
-        }
-        return item;
-      })
+  const increaseItemQuantity = (itemId: any) => {
+    setCart((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId ? { ...item, amount: item.amount + 1 } : item
+      )
     );
   };
 
   // decrease item quantity
 
-  const decreaseItemQuantity = (itemId: string) => {
-    setCart((prevCartItems) =>
-      prevCartItems.map((item) => {
-        if (item.id === itemId && item.quantity > 1) {
-          return { ...item, quantity: item.quantity - 1 };
-        }
-        console.log("item");
-        return item;
-      })
+  const decreaseItemQuantity = (itemId: any) => {
+    setCart((prevItems) =>
+      prevItems.map((item) =>
+        item.id === itemId && item.amount > 1
+          ? { ...item, amount: item.amount - 1 }
+          : item
+      )
     );
   };
 
@@ -46,7 +41,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const setItemQuantity = (itemId: any, newQuantity: any) => {
     setCart((prevItems) =>
       prevItems.map((item) =>
-        item.id === itemId ? { ...item, quantity: newQuantity } : item
+        item.id === itemId ? { ...item, amount: newQuantity } : item
       )
     );
   };
@@ -62,13 +57,13 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   // cart total
   useEffect(() => {
     const total = cart.reduce((a, c) => {
-      return a + c.price * c.amount;
+      return a + c.stats.price * c.amount;
     }, 0);
     setTotal(total);
   }, [cart]);
 
   // add to cart
-  const addToCart = (item: Array<{}>, id: string) => {
+  const addToCart = (item: Array<{}>, id: any) => {
     const itemID = parseInt(id);
     console.log(item);
     const newItem = { ...item[0], amount: 1 };
@@ -98,7 +93,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   // remove from cart
-  const removeFromCart = (id: string) => {
+  const removeFromCart = (id: any) => {
     const newCart = cart.filter((item) => {
       return item.id !== id;
     });
@@ -106,7 +101,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   // handle input
-  const handleInput = (e: { target: { value: string } }, id: string) => {
+  const handleInput = (e: { target: { value: string } }, id: any) => {
     const value = parseInt(e.target.value);
     // find the item in the cart by id
     const cartItem = cart.find((item) => {
@@ -138,7 +133,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   // handle select
-  const handleSelect = (e: { target: { value: string } }, id: string) => {
+  const handleSelect = (e: { target: { value: string } }, id: any) => {
     const value = parseInt(e.target.value);
     const cartItem = cart.find((item) => {
       return item.id === id;
@@ -166,12 +161,12 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         removeFromCart,
         itemsAmount,
         handleInput,
-        handleSelect,
         total,
         clearCart,
         increaseItemQuantity,
         decreaseItemQuantity,
         setItemQuantity,
+        handleSelect,
       }}>
       {children}
     </CartContext.Provider>

@@ -22,13 +22,14 @@ const Cart = () => {
               <div key={index} className="flex flex-col gap-y-3">
                 <div className="flex flex-row items-center justify-between">
                   <div className="w-14 h-14 rounded-lg overflow-hidden">
-                    <Image src={item.images[0].smallImage} alt="image" />
+                    <Image src={item.stats.images[0].smallImage} alt="image" />
                   </div>
                   <div className="flex flex-col">
-                    <p className="text-grayishblue">{item.title}</p>
+                    <p className="text-grayishblue">{item.stats.title}</p>
                     <div className="flex flex-row gap-x-4">
                       <p className="text-grayishblue">
-                        $<span>{item.price}</span> x <span>{item.amount}</span>
+                        $<span>{item.stats.price}</span> x{" "}
+                        <span>{item.amount}</span>
                       </p>
                       <p className="text-verydarkblue font-bold">${total}</p>
                     </div>

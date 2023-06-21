@@ -29,29 +29,31 @@ import BigBox from "./components/BigBox";
 
 const data = [
   {
-    id: "1",
-    images: [
-      {
-        bigImage: product1,
-        smallImage: miniproduct1,
-      },
-      {
-        bigImage: product2,
-        smallImage: miniproduct2,
-      },
-      {
-        bigImage: product3,
-        smallImage: miniproduct3,
-      },
-      {
-        bigImage: product4,
-        smallImage: miniproduct4,
-      },
-    ],
-    title: "Fall Limited Edition Sneakers",
-    description:
-      "These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they’ll withstand everything the weather can offer.",
-    price: 125,
+    id: 1,
+    stats: {
+      images: [
+        {
+          bigImage: product1,
+          smallImage: miniproduct1,
+        },
+        {
+          bigImage: product2,
+          smallImage: miniproduct2,
+        },
+        {
+          bigImage: product3,
+          smallImage: miniproduct3,
+        },
+        {
+          bigImage: product4,
+          smallImage: miniproduct4,
+        },
+      ],
+      title: "Fall Limited Edition Sneakers",
+      description:
+        "These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they’ll withstand everything the weather can offer.",
+      price: 125,
+    },
   },
 ];
 
@@ -62,6 +64,8 @@ export default function Home() {
     decreaseItemQuantity,
     setItemQuantity,
     itemsAmount,
+    handleInput,
+    handleSelect,
   } = useContext(CartContext) as AddToCart;
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -90,7 +94,7 @@ export default function Home() {
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex < data[0].images.length - 1 ? prevIndex + 1 : prevIndex
+      prevIndex < data[0].stats.images.length - 1 ? prevIndex + 1 : prevIndex
     );
   };
 
@@ -102,7 +106,7 @@ export default function Home() {
             <div
               onClick={modal.onOpen}
               className="w-full relative desktop:w-[400px] desktop:rounded-xl overflow-hidden">
-              <BigBox image={data[0].images[currentIndex].bigImage} />
+              <BigBox image={data[0].stats.images[currentIndex].bigImage} />
               <div className="absolute inset-5 flex items-center justify-between desktop:hidden">
                 <div
                   onClick={handlePrevious}
@@ -117,7 +121,7 @@ export default function Home() {
               </div>
             </div>
             <div className="hidden desktop:flex justify-between items-center mt-8">
-              {data[0].images.map((item, index) => (
+              {data[0].stats.images.map((item, index) => (
                 <div key={index}>
                   <MiniBox
                     image={item.smallImage}
@@ -132,13 +136,15 @@ export default function Home() {
             <div>
               <p className="text-mainorange font-bold">SNEAKER COMPANY</p>
               <h1 className="text-3xl text-verydarkblue font-bold mt-5">
-                {data[0].title}
+                {data[0].stats.title}
               </h1>
-              <p className="text-grayishblue mt-5">{data[0].description}</p>
+              <p className="text-grayishblue mt-5">
+                {data[0].stats.description}
+              </p>
               <div className="flex flex-row items-center justify-between mt-8 desktop:flex-col desktop:gap-y-2 desktop:items-start">
                 <div className="flex flex-row items-center gap-x-4">
                   <h3 className="text-3xl text-verydarkblue font-bold">
-                    R$ {data[0].price}
+                    R$ {data[0].stats.price}
                   </h3>
                   <p className="py-1 px-2 bg-paleorange text-mainorange font-bold w-min rounded-md">
                     50%
@@ -156,15 +162,15 @@ export default function Home() {
                     <Image src={minus} alt="image" />
                   </div>
                   <div
-                    onClick={handleIncrease}
+                    onClick={() => addToCart(data, data[0].id)}
                     className="absolute top-1/2 right-5 -translate-y-1/2">
                     <Image src={plus} alt="image" />
                   </div>
                   <input
                     type="text"
                     className="w-full h-full rounded-md bg-lightgrayishblue text-center font-bold text-verydarkblue outline-none"
+                    onChange={(e) => handleInput(e, data[0].id)}
                     value={itemsAmount}
-                    onChange={handleQuantityChange}
                   />
                 </div>
                 <div
