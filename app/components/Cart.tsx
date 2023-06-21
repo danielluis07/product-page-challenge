@@ -18,7 +18,7 @@ const Cart = () => {
       {cart.length >= 1 ? (
         <>
           {cart.map((item, index) => (
-            <div className="px-5 mt-7">
+            <div key={index} className="px-5 mt-7">
               <div key={index} className="flex flex-col gap-y-3">
                 <div className="flex flex-row items-center justify-between">
                   <div className="w-14 h-14 rounded-lg overflow-hidden">

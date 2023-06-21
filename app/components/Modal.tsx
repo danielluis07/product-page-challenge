@@ -115,7 +115,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             </div>
             <div className="flex justify-center gap-x-8 mt-10">
               {data.map((item, index) => (
-                <div>
+                <div key={index}>
                   <MiniBox
                     image={item.smallImage}
                     selected={currentIndex === index}
